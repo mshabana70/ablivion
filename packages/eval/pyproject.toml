@@ -1,0 +1,16 @@
+[project]
+name = "abl-eval"
+version = "0.1.0"
+description = "Tool-agnostic evaluation harness: scores and reports any model or edit, including reference tools' outputs."
+requires-python = ">=3.12"
+license = "Apache-2.0"
+dependencies = [
+    "innards",
+]
+
+[project.scripts]
+abeval = "abl_eval.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.9.24,<0.10"]
+build-backend = "uv_build"

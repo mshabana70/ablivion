@@ -1,0 +1,30 @@
+{
+  "kind": "split_manifest",
+  "schema_version": 1,
+  "source": {
+    "name": "abl-mechanical-fixture",
+    "revision": null,
+    "license": "Apache-2.0",
+    "note": "Synthetic CI fixture (guide \u00a75 mechanical set). Harmful-category rows are labeled placeholders with no harmful content."
+  },
+  "prompts": "prompts.jsonl",
+  "prompts_sha256": "54942076eed8eb28460a6556305f5c67e734efe90f2853029bcbd52ddbec92c1",
+  "assignments": {
+    "fit": [
+      "fam-01",
+      "fam-02",
+      "fam-03",
+      "fam-10"
+    ],
+    "validation": [
+      "fam-04",
+      "fam-05",
+      "fam-06"
+    ],
+    "final_test": [
+      "fam-07",
+      "fam-08",
+      "fam-09"
+    ]
+  }
+}

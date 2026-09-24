@@ -1,0 +1,58 @@
+# Workspace root. Virtual: it is not a package and is never built or installed.
+# One lockfile (uv.lock) covers every member below.
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv]
+# `uv sync` installs every member into the workspace venv, not just the root.
+package = false
+
+[tool.uv.sources]
+# First-party names always resolve to the workspace, never to an index. The
+# names are unregistered on PyPI; this keeps a squatted upload from being picked.
+innards = { workspace = true }
+abl-eval = { workspace = true }
+ablivion = { workspace = true }
+abl-experiments = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "innards",
+    "abl-eval",
+    "ablivion",
+    "abl-experiments",
+    "pytest>=9.1",
+    "import-linter>=2.15",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+addopts = ["--strict-markers", "--import-mode=importlib"]
+markers = [
+    "e2e: builds wheels, installs them into fresh venvs outside the source tree, and runs the installed CLIs",
+]
+
+# ---------------------------------------------------------------------------
+# Import contract (guide §4, "The dependency rule"). Checked by `lint-imports`
+# in CI and by tests/contract. labs/ is not a package, so its leaf rule is
+# enforced separately by tools/check_labs_leaf.py.
+# ---------------------------------------------------------------------------
+[tool.importlinter]
+root_packages = ["innards", "abl_eval", "ablivion", "abl_experiments"]
+include_external_packages = false
+
+[[tool.importlinter.contracts]]
+id = "core-imports-no-tool"
+name = "innards (core) imports none of the other packages"
+type = "forbidden"
+source_modules = ["innards"]
+forbidden_modules = ["abl_eval", "ablivion", "abl_experiments"]
+
+[[tool.importlinter.contracts]]
+id = "eval-independent-of-ablivion"
+name = "abl_eval does not import ablivion"
+type = "forbidden"
+source_modules = ["abl_eval"]
+forbidden_modules = ["ablivion"]

@@ -1,0 +1,13 @@
+[project]
+name = "innards"
+version = "0.1.0"
+description = "Neutral core for model-internals research: sessions, adapters, capture, directions, interventions, provenance."
+requires-python = ">=3.12"
+license = "Apache-2.0"
+dependencies = [
+    "pydantic>=2.13,<3",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.24,<0.10"]
+build-backend = "uv_build"

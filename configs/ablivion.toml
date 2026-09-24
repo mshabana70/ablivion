@@ -1,0 +1,20 @@
+# Stage A0 config. Sections for later stages ([capture], [method], [search],
+# [eval]) are added by the stage that implements them; until then they are
+# rejected as unknown keys. Relative paths resolve against this file's directory.
+schema_version = 1
+
+[model]
+id = "Qwen/Qwen3-4B-Instruct-2507"    # dense, non-thinking
+# Resolved 2026-09-24 from https://huggingface.co/api/models/Qwen/Qwen3-4B-Instruct-2507
+# (main -> this commit, lastModified 2025-09-17). config.json at this revision:
+# tie_word_embeddings = true, attention_bias = false. Tokenizer files are in the
+# same repo at the same revision.
+revision = "cdbee75f17c01a7cc42f958dc650907174af0554"
+representation = "bf16"
+
+[data]
+manifest = "../data/fixtures/mechanical/splits.json"   # mechanical CI fixture; research data comes later
+
+[artifacts]
+retain_responses = true
+retain_full_activations = false

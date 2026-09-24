@@ -1,0 +1,20 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: Install workspace from the lockfile
+        run: uv sync --locked --python 3.12
+      - name: Import contract (packages)
+        run: uv run --locked lint-imports
+      - name: Import contract (labs/ is a leaf)
+        run: uv run --locked python tools/check_labs_leaf.py
+      - name: Tests (unit, contract, E2E)
+        run: uv run --locked pytest -ra

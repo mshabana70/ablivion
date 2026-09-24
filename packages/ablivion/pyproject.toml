@@ -1,0 +1,17 @@
+[project]
+name = "ablivion"
+version = "0.1.0"
+description = "Abliteration research tool built on innards: method recipes, searches, analysis."
+requires-python = ">=3.12"
+license = "Apache-2.0"
+dependencies = [
+    "innards",
+    "pydantic>=2.13,<3",
+]
+
+[project.scripts]
+ablivion = "ablivion.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.9.24,<0.10"]
+build-backend = "uv_build"
