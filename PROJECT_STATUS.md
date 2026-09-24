@@ -4,8 +4,9 @@ Last updated: 24 September 2026. Repository notes take precedence over any harne
 
 ## Current stage and task
 
-- **Stage:** A0 (guide §7). The E2E gate passes locally. **Not yet complete:** there is no commit, so there's no commit ID for the §12 exit artifact, and CI has never run (no git repository or remote yet).
-- **Next task:** you run `git init` and make the first commit, then push to a remote so `.github/workflows/ci.yml` runs. After that, prepare for Stage A1 (torch/transformers installs below).
+- **Stage:** A0 (guide §7). The gate passes locally. The first commit is `27e0656` ("initial commit for repo setup at stage A0"). **One item open:** CI has never run, because there is no remote yet.
+- **Next task:** Stage A1, starting with a guided exploration of the chat template and token positions. You then write the oracle test and type `prepare_prompt` / position resolution, which is learning core.
+- **Working agreement (you, 24 September 2026):** from A1 on, you develop and I tutor. I keep my implementation stretches short and rare: small, reviewable infrastructure pieces only. Units in the learning core, and any units you reclassify, are typed by you.
 
 ## Guide version
 
@@ -96,12 +97,11 @@ Last updated: 24 September 2026. Repository notes take precedence over any harne
 
 ## Environment (observed 24 September 2026)
 
-WSL2 Linux x86_64 (kernel 6.18), RTX 4090 with 24 GiB (driver 591.86), 32 CPUs. System Python 3.10.12; the workspace uses uv-managed 3.12.12, and you ran `uv sync`. **Earlier notes said macOS arm64; that was wrong for this machine.** torch, transformers and safetensors are **not installed**.
+WSL2 Linux x86_64 (kernel 6.18), RTX 4090 with 24 GiB (driver 591.86), 32 CPUs. System Python 3.10.12; the workspace uses uv-managed 3.12.12. **Earlier notes said macOS arm64; that was wrong for this machine.** You installed torch `2.14.0+cu130` (CUDA 13.0; `doctor` shows cuda:0 with bf16), transformers 5.17.0 and safetensors 0.8.0. They're in the root `dev` dependency group from the default index, and the change is **not committed yet**. When the core first imports torch, the dependency has to move into `innards`' own dependencies.
 
 ## Unresolved issues
 
-- **No git repository.** Until your first commit, manifests record `code.commit = null` along with a note. The §12 A0 exit artifact needs a commit ID.
-- **CI has never run.** It needs a remote.
+- **CI has never run.** It needs a remote. Until you push, the local `pytest`, `lint-imports` and labs-checker runs are the only evidence.
 - **Is this the same checkpoint the paper used?** The guide (§12, R22) asks whether the refusal-direction paper used this revision. That isn't checked, because I don't know which revision the paper used.
 - **D1–D6 are unconfirmed.** They need torch and transformers (commands below).
 - **References still marked Verify in guide §16:** R6, R8, R12–R16, R27–R31, R33–R35, R37–R39, R41–R43.
@@ -112,10 +112,6 @@ WSL2 Linux x86_64 (kernel 6.18), RTX 4090 with 24 GiB (driver 591.86), 32 CPUs. 
 
 ## Next concrete action
 
-1. You run `git init`, review the scaffold, make the first commit, and push to a remote so CI runs. Record the commit ID and the CI result here to close A0.
-2. You run the Stage A1 installs, then I mark the index `explicit = true`:
-   - `uv add --package innards "torch>=2.14,<2.15" --index pytorch-cu130=https://download.pytorch.org/whl/cu130`
-   - `uv add --package innards "transformers>=5.17,<6" "safetensors>=0.8,<0.9"`
-   - The cu130 wheel for torch 2.14.0 cp312 exists (checked). Driver support for CUDA 13.0 is inferred, not verified.
-3. Confirm D1, D2, D3 and D6 on tiny fixtures and toy calculations, and record the verdicts in `DISCREPANCIES.md`.
-4. Stage A1 (the loader, the first `ModelAdapter` with tied-parameter identity, the first scorers) is infrastructure plus core contracts. Stage A2 (difference-of-means capture) is the first learning-core unit: you write its oracle test first, then type one 20–60-line unit, then we pause (AGENTS.md §5).
+1. Commit the torch/transformers/safetensors change to `pyproject.toml` and `uv.lock`. When you push to a remote, record the CI result here.
+2. **A1, unit 1 (yours):** a scratch exploration of the chat template at the pinned revision, where you predict first and then observe. Then write the oracle test for prompt preparation and position resolution (`t_inst`, `t_post-inst`), then type the implementation.
+3. The rest of A1 as agreed in the unit plan. Confirm D3 during the tied-parameter unit, and D1, D2 and D6 during A3's projection oracle. Record the verdicts in `DISCREPANCIES.md`.

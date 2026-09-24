@@ -24,6 +24,9 @@ dev = [
     "abl-experiments",
     "pytest>=9.1",
     "import-linter>=2.15",
+    "torch>=2.14.0",
+    "transformers>=5.17.0",
+    "safetensors>=0.8.0",
 ]
 
 [tool.pytest.ini_options]

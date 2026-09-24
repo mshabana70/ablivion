@@ -10,3 +10,6 @@ build/
 # Run artifacts may contain model responses; they stay local (AGENTS.md §1).
 runs/
 exports/
+
+# Throwaway explorations; promote anything worth keeping into a package or lab.
+scratch/
