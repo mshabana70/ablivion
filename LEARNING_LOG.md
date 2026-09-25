@@ -12,7 +12,7 @@ This log records what I have understood about each concept and what shows it. It
 
 | Date | Concept | Evidence | Level | Remaining confusion | Review question |
 |---|---|---|---|---|---|
-| — | — | No entries yet. | — | — | — |
+| 2026-09-24 | Chat-template rendering and token positions (`t_inst`, `t_post-inst`) | Wrote `scratch/template_probe.py` from a spec, without code help. Predictions: (a) no default system prompt, which is correct; a BOS token, which is incorrect because Qwen adds none; the newline tokens were left out. (b) Expected `t_inst` and `t_post-inst` to be tokens the template inserts, a misconception now corrected: they are positions. (c) Answered "not always contiguous" because of subword splitting. That conflates splitting with boundary merges, and the answer wasn't tested: all three of the cases tried were in fact contiguous. | Script: completed with guidance. Concept: introduced. | (c) is still open: a challenge is pending on which template boundary allows a merge. | In a two-turn conversation, where is `t_post-inst`, and why is refusal read there rather than at `t_inst`? |
 
 **24 September 2026 (audit of the guide and the reference tools):** nothing is recorded. I reviewed and approved the proposed changes to the guide. That is not evidence of understanding.
 
